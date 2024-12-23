@@ -64,9 +64,9 @@ Este proyecto es una aplicación desarrollada con **Spring Boot 3.4.0** que prop
 - **Dependencia**: `java-jwt`
 - **Descripción**: Manejo de autenticación basada en tokens seguros y compactos con JSON Web Tokens.
 
-### 11. **FTP**
-- **Dependencia**: `java-jwt`
-- **Descripción**: Manejo de autenticación basada en tokens seguros y compactos con JSON Web Tokens.
+### 11. **commons-net**
+- **Dependencia**: `commons-net`
+- **Descripción**: Manejo de conecciones FTP.
 
 ## Requisitos previos
 
