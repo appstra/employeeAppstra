@@ -3,9 +3,11 @@ package com.appstra.employee.controller;
 import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,10 +20,12 @@ public class DocumentsEmployeeController {
         this.documentsEmployeeService = documentsEmployeeService;
     }
 
-    @PostMapping("/savedocumentsemployee")
+    @PostMapping(value = "/savedocumentsemployee", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Guardar Documento de Empleado", description = "Guardar un nuevo documento asociado a un empleado")
-    public ResponseEntity<DocumentsEmployee> saveDocumentsEmployee(@Validated @RequestBody DocumentsEmployee documentsEmployee) {
-        return ResponseEntity.ok(documentsEmployeeService.saveDocumentsEmployee(documentsEmployee));
+    public ResponseEntity<DocumentsEmployee> saveDocumentsEmployee(
+            @RequestPart("document") MultipartFile document,
+            @RequestPart("documentsEmployee") DocumentsEmployee documentsEmployee) {
+        return ResponseEntity.ok(documentsEmployeeService.saveDocumentsEmployee(document, documentsEmployee));
     }
 
     @PutMapping("/updatedocumentsemployee")

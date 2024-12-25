@@ -24,6 +24,7 @@ public class DocumentsEmployee {
     @JoinColumn(name = "TYDO_ID", referencedColumnName = "TYDO_ID")
     private  TypeDocuments typeDocuments;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "EMPL_ID", referencedColumnName = "EMPL_ID")
     private  Employee employee;

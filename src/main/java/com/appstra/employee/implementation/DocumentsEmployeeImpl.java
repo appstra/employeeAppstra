@@ -5,6 +5,7 @@ import com.appstra.employee.methods.ConexionFTP;
 import com.appstra.employee.repository.DocumentsEmployeeRepository;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -21,7 +22,7 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     }
 
     @Override
-    public DocumentsEmployee saveDocumentsEmployee(DocumentsEmployee documentsEmployee) {
+    public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
         documentsEmployee.setDocumentsEmployeeCreationDate(Timestamp.valueOf(LocalDateTime.now()));
         documentsEmployee.setDocumentsEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
         return documentsEmployeeRepository.save(documentsEmployee);
