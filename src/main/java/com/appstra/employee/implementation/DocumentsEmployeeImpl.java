@@ -14,6 +14,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 @Service
 public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     private final DocumentsEmployeeRepository documentsEmployeeRepository;
@@ -22,7 +27,7 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
         this.documentsEmployeeRepository = documentsEmployeeRepository;
     }
 
-    @Override
+    /*@Override
     public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
         try {
             ConexionFTP conexionFTP = new ConexionFTP();
@@ -48,6 +53,40 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
             System.out.println("Error: " + e.getMessage());
         }finally {
             return null;
+        }
+    }*/
+    @Override
+    public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
+        try {
+            // Directorio base en el servidor
+            String baseDirectory = "D:\\Desktop\\documentacionPersona";
+            String employeeFolder = String.valueOf(documentsEmployee.getEmployee().getEmployeeId());
+            Path employeePath = Paths.get(baseDirectory, employeeFolder);
+
+            // Crear el directorio si no existe
+            if (!Files.exists(employeePath)) {
+                Files.createDirectories(employeePath);
+            }
+
+            // Definir la ruta y el nombre del archivo
+            String fileName = documentsEmployee.getEmployee().getEmployeeId() + "_" +
+                    documentsEmployee.getTypeDocuments().getTypeDocumentId() + ".pdf";
+            Path filePath = employeePath.resolve(fileName);
+
+            // Guardar el archivo en el servidor
+            Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Actualizar información del objeto DocumentsEmployee
+            documentsEmployee.setDocumentsEmployeeCreationDate(Timestamp.valueOf(LocalDateTime.now()));
+            documentsEmployee.setDocumentsEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
+            documentsEmployee.setDocumentsEmployeeUrl(employeePath.toString() + "\\" + fileName);
+            documentsEmployee.setDocumentsEmployeeName(fileName);
+
+            // Guardar en el repositorio
+            return documentsEmployeeRepository.save(documentsEmployee);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null; // Retornar null en caso de error
         }
     }
 
