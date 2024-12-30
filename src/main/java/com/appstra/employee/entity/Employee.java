@@ -69,6 +69,14 @@ public class Employee {
     @JoinColumn(name = "CESA_ID", referencedColumnName = "CESA_ID")
     private  Cesantias cesantias;
 
+    @ManyToOne
+    @JoinColumn(name = "ARL_ID", referencedColumnName = "ARL_ID")
+    private  Arl arl;
+
+    @ManyToOne
+    @JoinColumn(name = "COFU_ID", referencedColumnName = "COFU_ID")
+    private  CompensationFund compensationFund;
+
     @Column(name = "EMPL_BUSINESS_MAIL")
     @Comment("Correo electrónico empresarial del empleado")
     private String employeeBusinessMail;

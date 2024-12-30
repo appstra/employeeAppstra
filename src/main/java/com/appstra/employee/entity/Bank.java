@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,5 +40,9 @@ public class Bank {
     @Column(name = "BANK_CREATION_DATE")
     @Comment("Fecha de creación del banco")
     private Timestamp bankCreationDate;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "bank")
+    private List<Employee> EmployeeList;
 }
 
