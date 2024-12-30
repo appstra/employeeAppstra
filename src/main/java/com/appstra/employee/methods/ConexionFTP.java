@@ -3,7 +3,9 @@ package com.appstra.employee.methods;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPSClient;
 
@@ -14,10 +16,17 @@ public class ConexionFTP {
     public boolean conectar() throws IOException {
         boolean conect;
         this.ftp = new FTPSClient();
+        this.ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+
         try {
-            this.ftp.connect("192.168.0.2");
+            this.ftp.connect("192.168.0.2",21);
             conect = this.ftp.login("UserFTP", "appstraAdmin");
-            System.out.println("la coneccion fue: " + conect);
+            this.ftp.setFileType(this.ftp.BINARY_FILE_TYPE);// Tipo de archivo: binario
+            this.ftp.setEndpointCheckingEnabled(false); // Deshabilita la verificación del endpoint
+            this.ftp.execPBSZ(0); // Establece el buffer de protección
+            this.ftp.execPROT("P"); // Usa protección de datos
+            this.ftp.enterLocalPassiveMode(); // Modo pasivo
+            System.out.println("La conexión fue: " + conect);
         } catch (IOException e) {
             System.out.println(";conectar;FTP;" + e.getMessage());
             conect = false;
@@ -48,12 +57,10 @@ public class ConexionFTP {
 
     public boolean enviarArchivo(String rutaArchivoFtp, InputStream inputStream) throws IOException {
         try {
-            this.ftp.setFileType(2);
-            this.ftp.enterLocalPassiveMode();
             this.ftp.storeFile(rutaArchivoFtp, inputStream);
             return true;
         } catch (IOException e) {
-            System.out.println(";enviarArchivo;FTP;" + e.getMessage());
+            System.out.println("Error FTP: " + e);
             return false;
         }
     }
@@ -92,8 +99,8 @@ public class ConexionFTP {
 
     public boolean getArchivo(String rutaArchivo, OutputStream outputStream) throws IOException {
         try {
-            this.ftp.setFileType(2);
-            this.ftp.enterLocalPassiveMode();
+            this.ftp.setFileType(2); // Tipo de archivo: binario
+            this.ftp.enterLocalPassiveMode(); // Modo pasivo
             boolean exito = this.ftp.retrieveFile(rutaArchivo, outputStream);
             outputStream.close();
             return exito;
@@ -117,10 +124,10 @@ public class ConexionFTP {
         try {
             FTPFile[] remoteFiles = this.ftp.listFiles(rutaArchivo);
             if (remoteFiles.length > 0) {
-                System.out.println("File " + remoteFiles[0].getName() + " exists");
+                System.out.println("El archivo " + remoteFiles[0].getName() + " existe");
                 exito = true;
             } else {
-                System.out.println("File " + rutaArchivo + " does not exists");
+                System.out.println("El archivo " + rutaArchivo + " no existe");
                 exito = false;
             }
         } catch (IOException e) {

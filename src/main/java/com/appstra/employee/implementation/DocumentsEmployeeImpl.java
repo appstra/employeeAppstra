@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,9 +24,31 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
 
     @Override
     public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
-        documentsEmployee.setDocumentsEmployeeCreationDate(Timestamp.valueOf(LocalDateTime.now()));
-        documentsEmployee.setDocumentsEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
-        return documentsEmployeeRepository.save(documentsEmployee);
+        try {
+            ConexionFTP conexionFTP = new ConexionFTP();
+            if(conexionFTP.conectar()){
+                conexionFTP.cambiarCarpeta("documentacionPersona");
+                if (!conexionFTP.cambiarCarpeta(String.valueOf(documentsEmployee.getEmployee().getEmployeeId()))) {
+                    if (conexionFTP.crearCarpeta(String.valueOf(documentsEmployee.getEmployee().getEmployeeId()))) {
+                    }
+                }
+                documentsEmployee.setDocumentsEmployeeCreationDate(Timestamp.valueOf(LocalDateTime.now()));
+                documentsEmployee.setDocumentsEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
+                documentsEmployee.setDocumentsEmployeeUrl("documentacionPersona/"+documentsEmployee.getEmployee().getEmployeeId()+"_"+documentsEmployee.getTypeDocuments().getTypeDocumentId()+".pdf");
+                documentsEmployee.setDocumentsEmployeeName(documentsEmployee.getEmployee().getEmployeeId()+"_"+documentsEmployee.getTypeDocuments().getTypeDocumentId()+".pdf");
+
+                if (conexionFTP.enviarArchivo(documentsEmployee.getDocumentsEmployeeName(), multipartFile.getInputStream())) {
+                    return documentsEmployeeRepository.save(documentsEmployee);
+                }else {
+                    System.out.println("Error");
+                }
+                conexionFTP.desconectar();
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }finally {
+            return null;
+        }
     }
 
     @Override
