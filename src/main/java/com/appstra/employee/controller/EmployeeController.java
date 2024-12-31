@@ -1,5 +1,6 @@
 package com.appstra.employee.controller;
 
+import com.appstra.employee.dto.EmployeeDTO;
 import com.appstra.employee.entity.Employee;
 import com.appstra.employee.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,5 +47,10 @@ public class EmployeeController {
     @Operation(summary = "Información del Empleado", description = "Obtener información de un empleado por ID")
     public ResponseEntity<Employee> getEmployee(@PathVariable("employeeId") Integer employeeId) {
         return ResponseEntity.ok(employeeService.getEmployee(employeeId));
+    }
+    @GetMapping("listPersonCompany/{personId}")
+    @Operation(summary = "Listar empresas de la persona", description = "Listar empresas del empleado")
+    public ResponseEntity<List<EmployeeDTO>> listPersonCompany(@PathVariable("personId") Integer personId) {
+        return ResponseEntity.ok(employeeService.getListPersonCompany(personId));
     }
 }

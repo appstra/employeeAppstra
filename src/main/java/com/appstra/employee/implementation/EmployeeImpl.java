@@ -1,5 +1,6 @@
 package com.appstra.employee.implementation;
 
+import com.appstra.employee.dto.EmployeeDTO;
 import com.appstra.employee.entity.Employee;
 import com.appstra.employee.repository.EmployeeRepository;
 import com.appstra.employee.service.EmployeeService;
@@ -52,5 +53,10 @@ public class EmployeeImpl implements EmployeeService {
     public Employee getEmployee(Integer employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new NoSuchElementException("El empleado con el ID: " + employeeId + " no se encontró"));
+    }
+
+    @Override
+    public List<EmployeeDTO> getListPersonCompany(Integer personId) {
+        return employeeRepository.findByPersonId(personId);
     }
 }
