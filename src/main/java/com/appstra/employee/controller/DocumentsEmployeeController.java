@@ -48,7 +48,7 @@ public class DocumentsEmployeeController {
 
     @GetMapping("/{documentsEmployeeId}")
     @Operation(summary = "Información de Documento de Empleado", description = "Obtener información de un documento de empleado por ID")
-    public ResponseEntity<DocumentsEmployee> getDocumentsEmployee(@PathVariable("documentsEmployeeId") Integer documentsEmployeeId) {
+    public ResponseEntity<List<DocumentsEmployee> > getDocumentsEmployee(@PathVariable("documentsEmployeeId") Integer documentsEmployeeId) {
         return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployee(documentsEmployeeId));
     }
 

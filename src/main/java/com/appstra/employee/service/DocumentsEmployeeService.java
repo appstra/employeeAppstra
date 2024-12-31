@@ -10,5 +10,5 @@ public interface DocumentsEmployeeService {
     DocumentsEmployee updateDocumentsEmployee(DocumentsEmployee documentsEmployee);
     Boolean deleteDocumentsEmployee(Integer documentsEmployeeId);
     List<DocumentsEmployee> listDocumentsEmployees();
-    DocumentsEmployee getDocumentsEmployee(Integer documentsEmployeeId);
+    List<DocumentsEmployee>  getDocumentsEmployee(Integer documentsEmployeeId);
 }

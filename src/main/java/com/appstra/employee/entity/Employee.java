@@ -46,7 +46,7 @@ public class Employee {
     private  MaritalStatus maritalStatus;
 
     @Column(name = "ROLE_ID")
-    @Comment("ID del rol asociado al empleado, base de datos de userAppstra")
+    @Comment("ID del rol asociado al empleado, base de datos de compañia")
     private Integer roleId;
 
     @ManyToOne

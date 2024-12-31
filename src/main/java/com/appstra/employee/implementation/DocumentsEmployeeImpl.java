@@ -59,7 +59,8 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
         try {
             // Directorio base en el servidor
-            String baseDirectory = "D:\\Desktop\\documentacionPersona";
+            //String baseDirectory = "D:\\Desktop\\documentacionPersona";
+            String baseDirectory = "C:\\Users\\Public\\Documents\\documentacionPersona";
             String employeeFolder = String.valueOf(documentsEmployee.getEmployee().getEmployeeId());
             Path employeePath = Paths.get(baseDirectory, employeeFolder);
 
@@ -114,8 +115,7 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     }
 
     @Override
-    public DocumentsEmployee getDocumentsEmployee(Integer documentsEmployeeId) {
-        return documentsEmployeeRepository.findById(documentsEmployeeId)
-                .orElseThrow(() -> new NoSuchElementException("El documento del empleado con el ID: " + documentsEmployeeId + " no se encontró"));
+    public List<DocumentsEmployee> getDocumentsEmployee(Integer documentsEmployeeId) {
+        return documentsEmployeeRepository.findByEmployeeEmployeeId(documentsEmployeeId);
     }
 }
