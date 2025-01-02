@@ -44,5 +44,9 @@ public class TypeDocuments {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "typeDocuments")
     private List<DocumentsEmployee> documentsEmployeeList;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "typeDocuments")
+    private List<RoleTypeDocument> roleTypeDocumentList;
 }
 
