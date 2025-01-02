@@ -4,11 +4,13 @@ public class EmployeeDTO {
     private Integer employeeId;
     private Integer companyId;
     private Integer personId;
+    private Integer roleId;
 
-    public EmployeeDTO(Integer employeeId, Integer companyId, Integer personId) {
+    public EmployeeDTO(Integer employeeId, Integer companyId, Integer personId, Integer roleId) {
         this.employeeId = employeeId;
         this.companyId = companyId;
         this.personId = personId;
+        this.roleId = roleId;
     }
 
     public Integer getEmployeeId() {
@@ -33,5 +35,13 @@ public class EmployeeDTO {
 
     public void setPersonId(Integer personId) {
         this.personId = personId;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }
