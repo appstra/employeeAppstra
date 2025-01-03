@@ -1,5 +1,6 @@
 package com.appstra.employee.controller;
 
+import com.appstra.employee.dto.DocumentEmployeeLoadedDTO;
 import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,10 +47,16 @@ public class DocumentsEmployeeController {
         return ResponseEntity.ok(documentsEmployeeService.listDocumentsEmployees());
     }
 
-    @GetMapping("/{documentsEmployeeId}")
+    @GetMapping("/{employeeId}")
     @Operation(summary = "Información de Documento de Empleado", description = "Obtener información de un documento de empleado por ID")
-    public ResponseEntity<List<DocumentsEmployee> > getDocumentsEmployee(@PathVariable("documentsEmployeeId") Integer documentsEmployeeId) {
-        return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployee(documentsEmployeeId));
+    public ResponseEntity<List<DocumentsEmployee> > getDocumentsEmployee(@PathVariable("employeeId") Integer employeeId) {
+        return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployee(employeeId));
+    }
+
+    @GetMapping("loaded/{employeeId}")
+    @Operation(summary = "Información de Documento de Empleado cargados", description = "Obtener información de un documento de empleado cargados por ID")
+    public ResponseEntity<List<DocumentEmployeeLoadedDTO> > getDocumentsEmployeeLoaded(@PathVariable("employeeId") Integer employeeId) {
+        return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployeeLoaded(employeeId));
     }
 
 }

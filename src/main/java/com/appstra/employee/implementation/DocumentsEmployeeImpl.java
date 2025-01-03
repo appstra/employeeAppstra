@@ -1,5 +1,6 @@
 package com.appstra.employee.implementation;
 
+import com.appstra.employee.dto.DocumentEmployeeLoadedDTO;
 import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.methods.ConexionFTP;
 import com.appstra.employee.repository.DocumentsEmployeeRepository;
@@ -115,7 +116,12 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     }
 
     @Override
-    public List<DocumentsEmployee> getDocumentsEmployee(Integer documentsEmployeeId) {
-        return documentsEmployeeRepository.findByEmployeeEmployeeId(documentsEmployeeId);
+    public List<DocumentsEmployee> getDocumentsEmployee(Integer employeeId) {
+        return documentsEmployeeRepository.findByEmployeeEmployeeId(employeeId);
+    }
+
+    @Override
+    public List<DocumentEmployeeLoadedDTO> getDocumentsEmployeeLoaded(Integer employeeId) {
+        return documentsEmployeeRepository.getDocumentEmployeeLoaded(employeeId);
     }
 }

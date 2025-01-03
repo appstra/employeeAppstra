@@ -29,6 +29,10 @@ public class TypeDocuments {
     @Comment("ID del estado asociado al tipo de documento, base de datos de userAppstra")
     private Integer stateId;
 
+    @Column(name = "TYDO_REQUIRED")
+    @Comment("Documento requerido")
+    private Boolean typeDocumentRequired;
+
     @Column(name = "TYDO_EDIT_DATE")
     @Comment("Fecha de última edición")
     private Timestamp typeDocumentEditDate;
@@ -40,6 +44,10 @@ public class TypeDocuments {
     @Column(name = "TYDO_EDIT_USER_ID")
     @Comment("ID del usuario que realizó la última edición")
     private Integer typeDocumentEditUserId;
+
+    @ManyToOne
+    @JoinColumn(name = "DOGR_ID", referencedColumnName = "DOGR_ID")
+    private  DocumentGroup documentGroup;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "typeDocuments")
