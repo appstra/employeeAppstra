@@ -48,10 +48,4 @@ public class TypeDocumentsController {
     public ResponseEntity<TypeDocuments> getTypeDocument(@PathVariable("typeDocumentId") Integer typeDocumentId) {
         return ResponseEntity.ok(typeDocumentService.getTypeDocuments(typeDocumentId));
     }
-
-    @GetMapping("/listtypedocumentrole/{roleId}")
-    @Operation(summary = "listar documento por roleId", description = "listar documento por roleId")
-    public ResponseEntity<List<TypeDocuments>> deleteRoleTypeDocument(@PathVariable("roleId") Integer roleId) {
-        return ResponseEntity.ok(typeDocumentService.listTypeDocumentsRoleId(roleId));
-    }
 }

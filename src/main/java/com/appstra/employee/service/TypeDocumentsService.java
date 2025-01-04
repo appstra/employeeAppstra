@@ -10,5 +10,4 @@ public interface TypeDocumentsService {
     Boolean deleteTypeDocuments(Integer typeDocumentId);
     List<TypeDocuments> listTypeDocuments();
     TypeDocuments getTypeDocuments(Integer typeDocumentId);
-    List<TypeDocuments> listTypeDocumentsRoleId(Integer roleId);
 }

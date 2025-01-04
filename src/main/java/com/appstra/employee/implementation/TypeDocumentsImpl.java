@@ -53,9 +53,4 @@ public class TypeDocumentsImpl implements TypeDocumentsService {
         return typeDocumentsRepository.findById(tdocId)
                 .orElseThrow(() -> new NoSuchElementException("El tipo de documento con el ID: " + tdocId + " no se encontró"));
     }
-
-    @Override
-    public List<TypeDocuments> listTypeDocumentsRoleId(Integer roleId) {
-        return typeDocumentsRepository.findByRoleTypeDocumentListRoleId(roleId);
-    }
 }
