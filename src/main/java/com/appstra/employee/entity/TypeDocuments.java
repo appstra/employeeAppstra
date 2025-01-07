@@ -56,5 +56,18 @@ public class TypeDocuments {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "typeDocuments")
     private List<RoleTypeDocument> roleTypeDocumentList;
+
+    public TypeDocuments(Integer typeDocumentId, String typeDocumentName, Integer stateId, Boolean typeDocumentRequired, Timestamp typeDocumentEditDate, Timestamp typeDocumentCreationDate, Integer typeDocumentEditUserId) {
+        this.typeDocumentId = typeDocumentId;
+        this.typeDocumentName = typeDocumentName;
+        this.stateId = stateId;
+        this.typeDocumentRequired = typeDocumentRequired;
+        this.typeDocumentEditDate = typeDocumentEditDate;
+        this.typeDocumentCreationDate = typeDocumentCreationDate;
+        this.typeDocumentEditUserId = typeDocumentEditUserId;
+    }
+
+    public TypeDocuments() {
+    }
 }
 

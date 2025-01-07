@@ -1,6 +1,5 @@
 package com.appstra.employee.repository;
 
-import com.appstra.employee.dto.DocumentEmployeeLoadedDTO;
 import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.entity.TypeDocuments;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +11,14 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
 
     List<DocumentsEmployee> findByEmployeeEmployeeId (Integer employeeId);
     @Query("""
-        SELECT new com.appstra.employee.dto.DocumentEmployeeLoadedDTO(
-            tydo
+        SELECT new com.appstra.employee.entity.TypeDocuments(
+            tydo.typeDocumentId,
+            tydo.typeDocumentName,
+            tydo.stateId,
+            tydo.typeDocumentRequired,
+            tydo.typeDocumentEditDate,
+            tydo.typeDocumentCreationDate,
+            tydo.typeDocumentEditUserId
         )
         FROM Employee empl
         JOIN RoleTypeDocument rtdo ON empl.roleId = rtdo.roleId
@@ -22,6 +27,5 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
             ON doem.typeDocuments.typeDocumentId = tydo.typeDocumentId
         WHERE empl.employeeId = :employeeId AND doem.documentsEmployeeId IS NULL
     """)
-    List<DocumentEmployeeLoadedDTO> getDocumentEmployeeLoaded(Integer employeeId);
-
+    List<TypeDocuments> getDocumentEmployeeLoaded(Integer employeeId);
 }

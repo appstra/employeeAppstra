@@ -1,7 +1,7 @@
 package com.appstra.employee.controller;
 
-import com.appstra.employee.dto.DocumentEmployeeLoadedDTO;
 import com.appstra.employee.entity.DocumentsEmployee;
+import com.appstra.employee.entity.TypeDocuments;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
@@ -55,7 +55,7 @@ public class DocumentsEmployeeController {
 
     @GetMapping("loaded/{employeeId}")
     @Operation(summary = "Información de Documento de Empleado cargados", description = "Obtener información de un documento de empleado cargados por ID")
-    public ResponseEntity<List<DocumentEmployeeLoadedDTO> > getDocumentsEmployeeLoaded(@PathVariable("employeeId") Integer employeeId) {
+    public ResponseEntity<List<TypeDocuments> > getDocumentsEmployeeLoaded(@PathVariable("employeeId") Integer employeeId) {
         return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployeeLoaded(employeeId));
     }
 

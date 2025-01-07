@@ -1,19 +1,15 @@
 package com.appstra.employee.implementation;
 
-import com.appstra.employee.dto.DocumentEmployeeLoadedDTO;
 import com.appstra.employee.entity.DocumentsEmployee;
-import com.appstra.employee.methods.ConexionFTP;
+import com.appstra.employee.entity.TypeDocuments;
 import com.appstra.employee.repository.DocumentsEmployeeRepository;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -121,7 +117,7 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     }
 
     @Override
-    public List<DocumentEmployeeLoadedDTO> getDocumentsEmployeeLoaded(Integer employeeId) {
+    public List<TypeDocuments> getDocumentsEmployeeLoaded(Integer employeeId) {
         return documentsEmployeeRepository.getDocumentEmployeeLoaded(employeeId);
     }
 }
