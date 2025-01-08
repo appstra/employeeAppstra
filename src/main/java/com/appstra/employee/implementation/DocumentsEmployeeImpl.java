@@ -6,15 +6,12 @@ import com.appstra.employee.repository.DocumentsEmployeeRepository;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +23,9 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
-    private static final String BASE_DIRECTORY = "C:\\Users\\Public\\Documents\\documentacionPersona";
+
+    @Value("${base-directory}")
+    private String baseDirectory;
     private final DocumentsEmployeeRepository documentsEmployeeRepository;
 
     public DocumentsEmployeeImpl(DocumentsEmployeeRepository documentsEmployeeRepository) {
@@ -65,10 +64,8 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     public DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee) {
         try {
             // Directorio base en el servidor
-            //String baseDirectory = "D:\\Desktop\\documentacionPersona";
-            String baseDirectory = BASE_DIRECTORY;
             String employeeFolder = String.valueOf(documentsEmployee.getEmployee().getEmployeeId());
-            Path employeePath = Paths.get(baseDirectory, employeeFolder);
+            Path employeePath = Paths.get(this.baseDirectory, employeeFolder);
 
             // Crear el directorio si no existe
             if (!Files.exists(employeePath)) {

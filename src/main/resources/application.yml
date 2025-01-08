@@ -1,0 +1,15 @@
+# application.yml
+
+spring:
+  config:
+    activate:
+      on-profile: dev  # Activa el perfil 'dev' por defecto
+
+---
+spring.config.activate.on-profile: dev
+base-directory: "C:\\Users\\Public\\Documents\\documentacionPersona"
+
+---
+spring.config.activate.on-profile: prod
+base-directory: "D:\\Desktop\\documentacionPersona"
+
