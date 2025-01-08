@@ -57,7 +57,7 @@ public class DocumentsEmployeeController {
     }
 
     @GetMapping("loaded/{employeeId}")
-    @Operation(summary = "Información de Documento de Empleado cargados", description = "Obtener información de un documento de empleado cargados por ID")
+    @Operation(summary = "Lista de documentos faltantes", description = "obtiene los documentos que le falta por cargar")
     public ResponseEntity<List<TypeDocuments> > getDocumentsEmployeeLoaded(@PathVariable("employeeId") Integer employeeId) {
         return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployeeLoaded(employeeId));
     }
