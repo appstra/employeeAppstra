@@ -7,9 +7,9 @@ spring:
 
 ---
 spring.config.activate.on-profile: dev
-base-directory: "C:\\Users\\Public\\Documents\\documentacionPersona"
+base-directory: "D:\\Desktop\\documentacionPersona"
 
 ---
 spring.config.activate.on-profile: prod
-base-directory: "D:\\Desktop\\documentacionPersona"
+base-directory: "C:\\Users\\Public\\Documents\\documentacionPersona"
 
