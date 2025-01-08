@@ -4,9 +4,17 @@ import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.entity.TypeDocuments;
 import com.appstra.employee.repository.DocumentsEmployeeRepository;
 import com.appstra.employee.service.DocumentsEmployeeService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +26,7 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
+    private static final String BASE_DIRECTORY = "C:\\Users\\Public\\Documents\\documentacionPersona";
     private final DocumentsEmployeeRepository documentsEmployeeRepository;
 
     public DocumentsEmployeeImpl(DocumentsEmployeeRepository documentsEmployeeRepository) {
@@ -57,7 +66,7 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
         try {
             // Directorio base en el servidor
             //String baseDirectory = "D:\\Desktop\\documentacionPersona";
-            String baseDirectory = "C:\\Users\\Public\\Documents\\documentacionPersona";
+            String baseDirectory = BASE_DIRECTORY;
             String employeeFolder = String.valueOf(documentsEmployee.getEmployee().getEmployeeId());
             Path employeePath = Paths.get(baseDirectory, employeeFolder);
 
@@ -120,4 +129,28 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     public List<TypeDocuments> getDocumentsEmployeeLoaded(Integer employeeId) {
         return documentsEmployeeRepository.getDocumentEmployeeLoaded(employeeId);
     }
+
+    @Override
+    public Resource downloadDocument(Integer documentsEmployeeId) {
+        DocumentsEmployee documentsEmployee = documentsEmployeeRepository.findById(documentsEmployeeId)
+                .orElseThrow(() -> new IllegalArgumentException("El documento del empleado no existe: " + documentsEmployeeId));
+        try {
+            Path employeePath = Paths.get(documentsEmployee.getDocumentsEmployeeUrl());
+            if (Files.exists(employeePath)) {
+                Resource resource = new UrlResource(employeePath.toUri());
+
+                if (resource.exists() && resource.isReadable()) {
+                    return resource;
+                } else {
+                    throw new IOException("El archivo no es legible.");
+                }
+            } else {
+                throw new FileNotFoundException("El archivo no existe en la ruta especificada.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al intentar descargar el documento: " + e.getMessage());
+        }
+    }
+
 }

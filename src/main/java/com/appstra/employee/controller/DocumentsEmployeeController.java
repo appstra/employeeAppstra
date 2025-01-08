@@ -4,11 +4,14 @@ import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.entity.TypeDocuments;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
 
 import java.util.List;
 
@@ -57,6 +60,24 @@ public class DocumentsEmployeeController {
     @Operation(summary = "Información de Documento de Empleado cargados", description = "Obtener información de un documento de empleado cargados por ID")
     public ResponseEntity<List<TypeDocuments> > getDocumentsEmployeeLoaded(@PathVariable("employeeId") Integer employeeId) {
         return ResponseEntity.ok(documentsEmployeeService.getDocumentsEmployeeLoaded(employeeId));
+    }
+
+    @GetMapping("downloadDocument/{documentsEmployeeId}")
+    @Operation(summary = "Descargar Documentos", description = "Descargar Documentos empleado")
+    public ResponseEntity<Resource> downloadDocument(@PathVariable("documentsEmployeeId") Integer documentsEmployeeId) {
+        try {
+            Resource resource = documentsEmployeeService.downloadDocument(documentsEmployeeId);
+
+            String contentDisposition = "attachment; filename=\"" + resource.getFilename() + "\"";
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 
 }
