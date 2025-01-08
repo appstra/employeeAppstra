@@ -57,7 +57,7 @@ public class TypeDocuments {
     @OneToMany(mappedBy = "typeDocuments")
     private List<RoleTypeDocument> roleTypeDocumentList;
 
-    public TypeDocuments(Integer typeDocumentId, String typeDocumentName, Integer stateId, Boolean typeDocumentRequired, Timestamp typeDocumentEditDate, Timestamp typeDocumentCreationDate, Integer typeDocumentEditUserId) {
+    public TypeDocuments(Integer typeDocumentId, String typeDocumentName, Integer stateId, Boolean typeDocumentRequired, Timestamp typeDocumentEditDate, Timestamp typeDocumentCreationDate, Integer typeDocumentEditUserId,DocumentGroup documentGroup) {
         this.typeDocumentId = typeDocumentId;
         this.typeDocumentName = typeDocumentName;
         this.stateId = stateId;
@@ -65,6 +65,7 @@ public class TypeDocuments {
         this.typeDocumentEditDate = typeDocumentEditDate;
         this.typeDocumentCreationDate = typeDocumentCreationDate;
         this.typeDocumentEditUserId = typeDocumentEditUserId;
+        this.documentGroup = documentGroup;
     }
 
     public TypeDocuments() {

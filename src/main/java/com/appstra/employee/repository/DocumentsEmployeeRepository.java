@@ -18,11 +18,13 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
             tydo.typeDocumentRequired,
             tydo.typeDocumentEditDate,
             tydo.typeDocumentCreationDate,
-            tydo.typeDocumentEditUserId
+            tydo.typeDocumentEditUserId,
+            dogr
         )
         FROM Employee empl
         JOIN RoleTypeDocument rtdo ON empl.roleId = rtdo.roleId
         JOIN rtdo.typeDocuments tydo
+        JOIN tydo.documentGroup dogr
         LEFT JOIN empl.documentsEmployeeList doem
             ON doem.typeDocuments.typeDocumentId = tydo.typeDocumentId
         WHERE empl.employeeId = :employeeId AND doem.documentsEmployeeId IS NULL
