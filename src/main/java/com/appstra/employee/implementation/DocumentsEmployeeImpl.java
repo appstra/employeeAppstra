@@ -20,6 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
@@ -148,6 +150,11 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
             e.printStackTrace();
             throw new RuntimeException("Error al intentar descargar el documento: " + e.getMessage());
         }
+    }
+
+    @Override
+    public List<Map<String, Objects>> getReportDocuments() {
+        return documentsEmployeeRepository.getReportDocuments();
     }
 
 }

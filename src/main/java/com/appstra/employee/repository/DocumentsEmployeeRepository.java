@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmployee,Integer> {
 
     List<DocumentsEmployee> findByEmployeeEmployeeId (Integer employeeId);
+
     @Query("""
         SELECT new com.appstra.employee.entity.TypeDocuments(
             tydo.typeDocumentId,
@@ -30,4 +33,9 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
         WHERE empl.employeeId = :employeeId AND doem.documentsEmployeeId IS NULL
     """)
     List<TypeDocuments> getDocumentEmployeeLoaded(Integer employeeId);
+
+    @Query(value = """
+        SELECT * FROM get_reportDocuments()
+    """, nativeQuery = true)
+    List<Map<String, Objects>> getReportDocuments();
 }

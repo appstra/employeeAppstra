@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/DocumentsEmployee")
@@ -78,6 +80,12 @@ public class DocumentsEmployeeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
+    }
+
+    @GetMapping("getReportDocuments")
+    @Operation(summary = "Reporte de documentos cargados", description = "obtiene el Reporte de documentos cargados")
+    public ResponseEntity<List<Map<String, Objects>>> getReportDocuments() {
+        return ResponseEntity.ok(documentsEmployeeService.getReportDocuments());
     }
 
 }

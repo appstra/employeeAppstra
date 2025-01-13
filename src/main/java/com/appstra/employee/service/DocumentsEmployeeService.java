@@ -6,6 +6,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public interface DocumentsEmployeeService {
     DocumentsEmployee saveDocumentsEmployee(MultipartFile multipartFile, DocumentsEmployee documentsEmployee);
@@ -15,4 +17,5 @@ public interface DocumentsEmployeeService {
     List<DocumentsEmployee>  getDocumentsEmployee(Integer employeeId);
     List<TypeDocuments> getDocumentsEmployeeLoaded (Integer employeeId);
     Resource downloadDocument(Integer documentsEmployeeId);
+    List<Map<String, Objects>> getReportDocuments();
 }
