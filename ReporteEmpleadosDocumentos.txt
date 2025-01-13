@@ -1,0 +1,49 @@
+CREATE OR REPLACE FUNCTION get_reportDocuments()
+RETURNS TABLE(
+    "personId" INTEGER,
+    "personName" VARCHAR,
+    "personIdentificationNumber" INTEGER,
+    "employeeId" INTEGER,
+    "companyName" VARCHAR,
+    "companyId" INTEGER,
+    "roleId" INTEGER,
+    "requeridos" INTEGER,
+    "cargados" INTEGER
+) AS $$
+BEGIN
+    RETURN QUERY
+        SELECT 
+    empl.pers_id as "personId",
+	(person.pers_first_name || ' ' || person.pers_last_name)::VARCHAR AS "personName",
+	person.pers_identification_number as "personIdentificationNumber",
+    empl.empl_id as "employeeId",
+	(company.comp_name)::VARCHAR as "companyName",
+    empl.comp_id as "companyId",
+    empl.role_id as "roleId",
+    COUNT(tydo.tydo_required)::INTEGER "requeridos",
+    COUNT(doem.doem_id)::INTEGER "cargados"
+    
+FROM 
+    parameterization.employee empl
+    INNER JOIN transactional.role_type_document rtdo ON empl.role_id = rtdo.role_id
+    INNER JOIN parameterization.type_documents tydo ON rtdo.tydo_id = tydo.tydo_id
+    LEFT JOIN transactional.documents_employee doem ON tydo.tydo_id = doem.tydo_id AND empl.empl_id = doem.empl_id
+    LEFT JOIN dblink('dbname=userAppstra user=postgres password=tENDOWnhAC host=localhost',
+                     'SELECT pers_id, pers_first_name, pers_last_name, pers_identification_number FROM parameterization.person WHERE pers_id = ' || empl.pers_id)
+    AS person(pers_id INT, pers_first_name VARCHAR, pers_last_name VARCHAR, pers_identification_number INT) ON empl.pers_id = person.pers_id
+	LEFT JOIN dblink('dbname=companyAppstra user=postgres password=tENDOWnhAC host=localhost',
+					 'SELECT comp_id,comp_name FROM parameterization.company  WHERE comp_id = ' || empl.comp_id)
+    AS company(comp_id INT,comp_name VARCHAR) ON empl.comp_id = company.comp_id
+WHERE
+    tydo.tydo_required = true
+GROUP BY
+    empl.empl_id,
+    empl.comp_id,
+    empl.role_id,
+    "personName",
+	"personIdentificationNumber",
+	company.comp_name;
+END;
+$$ LANGUAGE plpgsql;
+------------------------
+CREATE EXTENSION dblink;
