@@ -17,5 +17,5 @@ public interface DocumentsEmployeeService {
     List<DocumentsEmployee>  getDocumentsEmployee(Integer employeeId);
     List<TypeDocuments> getDocumentsEmployeeLoaded (Integer employeeId);
     Resource downloadDocument(Integer documentsEmployeeId);
-    List<Map<String, Objects>> getReportDocuments();
+    List<Map<String, Object>> getReportDocuments();
 }

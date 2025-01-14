@@ -37,5 +37,5 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
     @Query(value = """
         SELECT * FROM get_reportDocuments()
     """, nativeQuery = true)
-    List<Map<String, Objects>> getReportDocuments();
+    List<Map<String, Object>> getReportDocuments();
 }

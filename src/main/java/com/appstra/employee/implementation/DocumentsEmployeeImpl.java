@@ -2,6 +2,7 @@ package com.appstra.employee.implementation;
 
 import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.entity.TypeDocuments;
+import com.appstra.employee.methods.Functions;
 import com.appstra.employee.repository.DocumentsEmployeeRepository;
 import com.appstra.employee.service.DocumentsEmployeeService;
 import org.springframework.core.io.Resource;
@@ -153,8 +154,9 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     }
 
     @Override
-    public List<Map<String, Objects>> getReportDocuments() {
-        return documentsEmployeeRepository.getReportDocuments();
+    public List<Map<String, Object>> getReportDocuments() {
+        Functions newFunction = new Functions();
+        return newFunction.bodyOrganizer(documentsEmployeeRepository.getReportDocuments());
     }
 
 }
