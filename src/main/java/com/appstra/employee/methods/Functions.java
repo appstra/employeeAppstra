@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Functions {
-
+    /**
+     * Metodo para organizar el body de respuesta del reporte de documentos persona.
+     * @param originalData
+     * @return List<Map<String, Object>> reorganizedData
+     */
     public List<Map<String,Object>> bodyOrganizer(List<Map<String,Object>> originalData){
         List<Map<String, Object>> reorganizedData = new ArrayList<>();
 
