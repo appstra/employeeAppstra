@@ -59,4 +59,12 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDTO>> listPersonCompany(@PathVariable("personId") Integer personId) {
         return ResponseEntity.ok(employeeService.getListPersonCompany(personId));
     }
+
+    @GetMapping("/listemployee/findByStateId/{stateId}")
+    @Operation(summary = "Lista de Aspirantes por estado", description = "Obtener lista de todos los aspirantes por estado")
+    public ResponseEntity<List<Employee>> findByStateId(@PathVariable("stateId") Integer stateId){
+        return ResponseEntity.ok(employeeService.findByStateId(stateId));
+    }
+
+
 }

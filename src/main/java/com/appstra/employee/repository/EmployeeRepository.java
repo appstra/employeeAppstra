@@ -16,4 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
             WHERE e.personId = :personId
             """)
     List<EmployeeDTO> findByPersonId(Integer personId);
+
+    List<Employee> findByStateId(Integer stateId);
 }

@@ -59,4 +59,9 @@ public class EmployeeImpl implements EmployeeService {
     public List<EmployeeDTO> getListPersonCompany(Integer personId) {
         return employeeRepository.findByPersonId(personId);
     }
+
+    @Override
+    public List<Employee> findByStateId(Integer stateId) {
+        return employeeRepository.findByStateId(stateId);
+    }
 }
