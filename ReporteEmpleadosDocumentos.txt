@@ -1,3 +1,5 @@
+CREATE EXTENSION dblink;
+----------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION get_reportDocuments()
 RETURNS TABLE(
     "personId" INTEGER,
@@ -45,5 +47,47 @@ GROUP BY
 	company.comp_name;
 END;
 $$ LANGUAGE plpgsql;
-------------------------
-CREATE EXTENSION dblink;
+----------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION get_employee_documents()
+RETURNS TABLE (
+    personId INTEGER,
+    personName VARCHAR,
+    personIdentificationNumber INTEGER,
+    employeeId INTEGER,
+    documentGroupId INTEGER,
+    documentGroupName VARCHAR,
+    roleId INTEGER,
+    typeDocumentId INTEGER,
+    typeDocumentName VARCHAR,
+    state VARCHAR
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        empl.pers_id AS "personId",
+        (person.pers_first_name || ' ' || person.pers_last_name)::VARCHAR AS "personName",
+        person.pers_identification_number AS "personIdentificationNumber",
+        empl.empl_id AS "employeeId",
+        tydo.dogr_id AS "documentGroupId",
+        dogr.dogr_name AS "documentGroupName",
+        rtdo.role_id AS "roleId",
+        tydo.tydo_id AS "typeDocumentId",
+        tydo.tydo_name AS "typeDocumentName",
+        CASE
+            WHEN doem.tydo_id IS NOT NULL THEN 'Cargado'
+            ELSE 'Sin Cargar'
+        END :: VARCHAR AS "state"
+    FROM
+        parameterization.employee empl
+        INNER JOIN transactional.role_type_document rtdo ON empl.role_id = rtdo.role_id
+        INNER JOIN parameterization.type_documents tydo ON rtdo.tydo_id = tydo.tydo_id
+        LEFT JOIN transactional.documents_employee doem ON tydo.tydo_id = doem.tydo_id AND empl.empl_id = doem.empl_id
+        INNER JOIN parameterization.document_group dogr ON tydo.dogr_id = dogr.dogr_id
+        LEFT JOIN dblink(
+            'dbname=userAppstra user=postgres password=postgres host=localhost',
+            'SELECT pers_id, pers_first_name, pers_last_name, pers_identification_number FROM parameterization.person WHERE pers_id = ' || empl.pers_id
+        ) AS person(pers_id INT, pers_first_name VARCHAR, pers_last_name VARCHAR, pers_identification_number INT) 
+        ON empl.pers_id = person.pers_id
+	ORDER BY person.pers_identification_number;
+END;
+$$ LANGUAGE plpgsql;

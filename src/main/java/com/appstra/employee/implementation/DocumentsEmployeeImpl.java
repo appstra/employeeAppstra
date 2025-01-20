@@ -156,7 +156,13 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
     @Override
     public List<Map<String, Object>> getReportDocuments() {
         Functions newFunction = new Functions();
-        return newFunction.bodyOrganizer(documentsEmployeeRepository.getReportDocuments());
+        return newFunction.bodyOrganizerGetReportDocuments(documentsEmployeeRepository.getReportDocuments());
+    }
+
+    @Override
+    public List<Map<String, Object>> getReportDocumentsEmployee() {
+        Functions newFunction = new Functions();
+        return newFunction.bodyOrganizerGetReportDocumentsEmployee(documentsEmployeeRepository.getReportDocumentsEmployee());
     }
 
 }

@@ -4,6 +4,7 @@ import com.appstra.employee.entity.DocumentsEmployee;
 import com.appstra.employee.entity.TypeDocuments;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +39,11 @@ public interface DocumentsEmployeeRepository extends JpaRepository<DocumentsEmpl
         SELECT * FROM get_reportDocuments()
     """, nativeQuery = true)
     List<Map<String, Object>> getReportDocuments();
+
+    @Query(value = """
+        SELECT * FROM get_employee_documents()
+    """, nativeQuery = true)
+    List<Map<String, Object>> getReportDocumentsEmployee();
+
+
 }

@@ -88,4 +88,10 @@ public class DocumentsEmployeeController {
         return ResponseEntity.ok(documentsEmployeeService.getReportDocuments());
     }
 
+    @GetMapping("getReportDocumentsEmployee")
+    @Operation(summary = "Reporte de documentos cargados por el empleado", description = "obtiene el Reporte de documentos cargados  por el empleado")
+    public ResponseEntity<List<Map<String, Object>>> getReportDocumentsEmployee() {
+        return ResponseEntity.ok(documentsEmployeeService.getReportDocumentsEmployee());
+    }
+
 }
