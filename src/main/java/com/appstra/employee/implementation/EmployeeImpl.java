@@ -38,7 +38,11 @@ public class EmployeeImpl implements EmployeeService {
     @Override
     public Boolean deleteEmployee(Integer employeeId) {
         if (employeeRepository.existsById(employeeId)) {
-            employeeRepository.deleteById(employeeId);
+            Employee employee = employeeRepository.findById(employeeId)
+                    .orElseThrow(() -> new IllegalArgumentException("El empleado no existe: " + employeeId));
+            employee.setStateId(12);
+            employee.setEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
+            employeeRepository.save(employee);
             return true;
         }
         return false;
@@ -46,7 +50,7 @@ public class EmployeeImpl implements EmployeeService {
 
     @Override
     public List<Employee> listEmployees() {
-        return employeeRepository.findAll();
+        return employeeRepository.findByStateIdNot(12);
     }
 
     @Override

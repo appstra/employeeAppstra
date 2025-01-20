@@ -31,7 +31,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.updateEmployee(employee));
     }
 
-    @DeleteMapping("/deleteemployee/{employeeId}")
+    @PutMapping("/deleteemployee/{employeeId}")
     @Operation(summary = "Eliminar Empleado", description = "Eliminar un empleado por ID")
     public ResponseEntity<Boolean> deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
         return ResponseEntity.ok(employeeService.deleteEmployee(employeeId));

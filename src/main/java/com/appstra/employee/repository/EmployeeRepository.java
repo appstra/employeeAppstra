@@ -18,4 +18,8 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     List<EmployeeDTO> findByPersonId(Integer personId);
 
     List<Employee> findByStateId(Integer stateId);
+
+    List<Employee> findByStateIdNot(Integer stateId);
+
+
 }
