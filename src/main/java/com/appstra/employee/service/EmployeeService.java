@@ -13,5 +13,6 @@ public interface EmployeeService {
     Employee getEmployee(Integer employeeId);
     List<EmployeeDTO> getListPersonCompany(Integer personId);
     List<Employee>findByStateId (Integer stateId);
+    List<Employee> listEmployeeCompany(Integer companyId);
 }
 

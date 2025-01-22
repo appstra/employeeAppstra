@@ -66,5 +66,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findByStateId(stateId));
     }
 
+    @GetMapping("/listemployeeCompanyId/{companyId}")
+    @Operation(summary = "Lista de Empleados por compañia", description = "Obtener la lista de todos los empleados por compañia")
+    public ResponseEntity<List<Employee>> listEmployeeCompany(@PathVariable("companyId") Integer companyId) {
+        return ResponseEntity.ok(employeeService.listEmployeeCompany(companyId));
+    }
+
 
 }

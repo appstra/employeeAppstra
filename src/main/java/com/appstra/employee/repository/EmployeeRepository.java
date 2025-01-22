@@ -21,5 +21,5 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
     List<Employee> findByStateIdNot(Integer stateId);
 
-
+    List<Employee> findByCompanyIdAndStateIdNot(Integer companyId, Integer stateId);
 }

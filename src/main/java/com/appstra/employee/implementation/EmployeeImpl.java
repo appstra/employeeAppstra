@@ -68,4 +68,9 @@ public class EmployeeImpl implements EmployeeService {
     public List<Employee> findByStateId(Integer stateId) {
         return employeeRepository.findByStateId(stateId);
     }
+
+    @Override
+    public List<Employee> listEmployeeCompany(Integer companyId) {
+        return employeeRepository.findByCompanyIdAndStateIdNot(companyId, 12);
+    }
 }
