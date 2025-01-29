@@ -93,6 +93,22 @@ public class Employee {
     @Comment("ID del usuario que realizó la última edición del empleado")
     private Integer employeeEditUserId;
 
+    @Column(name = "EMPL_SALARY")
+    @Comment("salario del empleado")
+    private Integer employeeSalary;
+
+    @Column(name = "TYCO_ID")
+    @Comment("llave primario de TYPE_CONTRACT de labase de datos de company")
+    private Integer typeContractId;
+
+    @Column(name = "EMPL_DATE_INITIATION")
+    @Comment("fecha de inicio del empleado")
+    private Timestamp employeeDateInitiation;
+
+    @Column(name = "EMPL_DATE_FINISHES")
+    @Comment("fecha de finalizacion del empleado")
+    private Timestamp employeeDateFinishes;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "employee")
     private List<DocumentsEmployee> documentsEmployeeList;
