@@ -49,6 +49,10 @@ public class Functions {
             reorganizedEntry.put("typeDocumentId", entry.get("typeDocumentId"));
             reorganizedEntry.put("typeDocumentName", entry.get("typeDocumentName"));
             reorganizedEntry.put("state", entry.get("state"));
+            reorganizedEntry.put("companyId", entry.get("companyId"));
+            reorganizedEntry.put("companyName", entry.get("companyName"));
+            reorganizedEntry.put("statId", entry.get("statId"));
+            reorganizedEntry.put("statName", entry.get("statName"));
 
             reorganizedData.add(reorganizedEntry);
         }
