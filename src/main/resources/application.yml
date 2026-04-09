@@ -11,5 +11,5 @@ base-directory: "D:\\Desktop\\documentacionPersona"
 
 ---
 spring.config.activate.on-profile: prod
-base-directory: "C:\\Users\\Public\\Documents\\documentacionPersona"
+base-directory: "/archivos/Documents/documentacionPersona"
 

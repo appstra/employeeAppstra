@@ -2,7 +2,7 @@ spring.application.name=employeeAppstra
 #--------------------------DataBase
 spring.datasource.url = jdbc:postgresql://localhost:5432/employeeAppstra
 spring.datasource.username = postgres
-spring.datasource.password = tENDOWnhAC
+spring.datasource.password = secret
 # Opcionales (ajustan el pool de conexiones)
 spring.datasource.hikari.maximum-pool-size=5
 spring.datasource.hikari.minimum-idle=2
