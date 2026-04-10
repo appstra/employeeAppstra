@@ -86,13 +86,14 @@ public class DocumentsEmployeeImpl implements DocumentsEmployeeService {
             // Actualizar información del objeto DocumentsEmployee
             documentsEmployee.setDocumentsEmployeeCreationDate(Timestamp.valueOf(LocalDateTime.now()));
             documentsEmployee.setDocumentsEmployeeEditDate(Timestamp.valueOf(LocalDateTime.now()));
-            documentsEmployee.setDocumentsEmployeeUrl(employeePath.toString() + "\\" + fileName);
+            documentsEmployee.setDocumentsEmployeeUrl(employeePath.toString() + "/" + fileName);
             documentsEmployee.setDocumentsEmployeeName(fileName);
 
             // Guardar en el repositorio
             return documentsEmployeeRepository.save(documentsEmployee);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+            //e.printStackTrace();
             return null; // Retornar null en caso de error
         }
     }
